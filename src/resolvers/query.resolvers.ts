@@ -2,8 +2,9 @@ import { QueryResolvers } from '../generated/graphql';
 import { convertBook, convertAuthor } from '../utils';
 
 export const queryResolvers: QueryResolvers = {
-  books: async (_, __, { dbClient }) => {
+  books: async (_, __, { dbClient, request }) => {
     const books = await dbClient.getBooks();
+    console.log(request);
     return books.map(convertBook);
   },
 

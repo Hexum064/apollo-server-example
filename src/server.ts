@@ -13,9 +13,10 @@ export function createServer(): Express {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: {
+    context: req => ({
+      request: req,
       dbClient: new DbClient(),
-    },
+    }),
     introspection: true,
     playground: true,
   });
@@ -23,6 +24,8 @@ export function createServer(): Express {
   const app = express();
 
   server.applyMiddleware({ app, cors: true });
+  
+  
 
   return app;
 }
